@@ -34,7 +34,13 @@ namespace ViewInAndroidStudio
                     //a directory filename changed
                     var oldDir = ea.OldName.ParentDirectory;
                     var newDir = ea.NewName.ParentDirectory;
+
+                    if (!newDir.ToString ().Contains ("Resources")) {
+                        return;
+                    }
+
                     while (oldDir.FileName == newDir.FileName) {
+
                         if (oldDir.ParentDirectory == null) {
                             System.Diagnostics.Debug.WriteLine ("should not happen");
                             return;
