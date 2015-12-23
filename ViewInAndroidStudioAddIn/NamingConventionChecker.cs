@@ -18,6 +18,8 @@ namespace ViewInAndroidStudio
 
             IdeApp.Workspace.FileRenamedInProject += (sender, e) => CheckProjectFileNamingConventions(e.Select (ea => ea.ProjectFile));
 
+            IdeApp.Workspace.FileAddedToProject += (sender, e) => CheckProjectFileNamingConventions(e.Select (ea => ea.ProjectFile));
+
             IdeApp.Workspace.FileRemovedFromProject += (sender, e) => ClearOwnFileErrors(e.Select(ea => ea.ProjectFile.FilePath));
 
             IdeApp.Workspace.SolutionLoaded += (sender, e) => CheckProjectNamingConventions();
@@ -50,6 +52,7 @@ namespace ViewInAndroidStudio
         }
 
         private void CheckProjectFileNamingConventions (ProjectFile file) {
+            //TODO: Check directory naming conventions here when file is renamed
             ClearOwnFileErrors (file.FilePath);
             if (ProjectFileUtils.IsResource (file)) {
                 if (file.Name.Split ('.').Last ().ToLowerInvariant () == "axml") {
@@ -59,13 +62,7 @@ namespace ViewInAndroidStudio
                     TaskService.Errors.Add (new Task (file.FilePath, "Resource file has captial letter in filename", 0, 0, TaskSeverity.Warning,TaskPriority.Normal, null, this));
                 }
             }
-        }
-
-        private void CheckDirectoryNamingConvention (FilePath dir) {
-            
-        }
-
-     
+        }     
 
         private  void CheckProjectNamingConventions ()
         {
