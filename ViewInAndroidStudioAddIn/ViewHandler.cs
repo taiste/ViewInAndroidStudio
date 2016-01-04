@@ -17,6 +17,7 @@ namespace ViewInAndroidStudio
         {
             base.Run ();
             //TODO: implement
+           
         }
             
 

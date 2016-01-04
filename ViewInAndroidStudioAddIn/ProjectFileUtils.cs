@@ -8,6 +8,8 @@ namespace ViewInAndroidStudio
     {
         public static bool IsResource(ProjectFile file) 
         {
+            if (file == null)
+                return false;
             return file.BuildAction == "AndroidResource";
         }
 

@@ -40,14 +40,10 @@ namespace ViewInAndroidStudio
                     }
 
                     while (oldDir.FileName == newDir.FileName) {
-
-                        if (oldDir.ParentDirectory == null) {
-                            System.Diagnostics.Debug.WriteLine ("should not happen");
-                            return;
-                        }
                         oldDir = oldDir.ParentDirectory;
                         newDir = newDir.ParentDirectory;
                     }
+
                     ClearOwnFileErrors (oldDir);
                     CheckDirectoryNamingConvention (newDir);
                 } else {
