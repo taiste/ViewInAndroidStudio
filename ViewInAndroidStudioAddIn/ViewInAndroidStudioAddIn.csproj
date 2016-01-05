@@ -34,6 +34,8 @@
     <Compile Include="ViewInAndroidStudioCommands.cs" />
     <Compile Include="NamingConventionChecker.cs" />
     <Compile Include="ProjectFileUtils.cs" />
+    <Compile Include="Preferences.cs" />
+    <Compile Include="GeneralOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Manifest.addin.xml" />

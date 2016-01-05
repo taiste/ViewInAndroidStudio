@@ -7,8 +7,14 @@
             _label="View in Android Studio"
             defaultHandler="ViewInAndroidStudio.ViewHandler" />
     </Extension>
+    <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog">
+        <Section id="ViewInAndroidStudio" _label="Android Studio" />
+    </Extension>
     <Extension path="/MonoDevelop/Ide/StartupHandlers">
         <Class id ="ViewInAndroidStudio.NamingConventionChecker"/>
+    </Extension>
+    <Extension path = "/MonoDevelop/Ide/GlobalOptionsDialog/ViewInAndroidStudio">
+        <Section id = "ViewInAndroidStudioGeneral" _label = "General" fill="true" class="ViewInAndroidStudio.GeneralOptions" />
     </Extension>
     <Extension
         path="/MonoDevelop/Ide/ContextMenu/ProjectPad">

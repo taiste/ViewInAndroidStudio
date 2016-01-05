@@ -7,17 +7,21 @@ using System.Linq;
 using MonoDevelop.Ide.Tasks;
 using System.Collections.Generic;
 using MonoDevelop.Core;
+using System.Diagnostics;
 
 namespace ViewInAndroidStudio
 {
     public class ViewHandler : CommandHandler
     {
+      
 
        protected override void Run ()
         {
             base.Run ();
-            //TODO: implement
-           
+            var fileToOpen =  IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
+            string args = "-a \""+ Preferences.AndroidStudioLocation + "\" " + fileToOpen.FilePath.FullPath.ToString().Replace(" ", "\\ ");
+            System.Diagnostics.Process.Start (new ProcessStartInfo("open", args){UseShellExecute = false});
+
         }
             
 
