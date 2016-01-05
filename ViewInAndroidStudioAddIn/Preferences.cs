@@ -7,11 +7,12 @@ using System.Xml;
 namespace ViewInAndroidStudio
 {
     class AddinConfig {
+        [ItemProperty]
         public string AndroidStudioLocation = "/Applications/Android Studio.app/Contents/MacOS/studio";
     }
 
 
-    public class Preferences
+    public static class Preferences
     {
         public static string AndroidStudioLocation {
             get { return GetConfig ().AndroidStudioLocation; }
@@ -19,7 +20,7 @@ namespace ViewInAndroidStudio
         }
 
         private static AddinConfig configuration;
-        private static DataContext dataContext = new DataContext ();
+        private static readonly DataContext dataContext = new DataContext ();
 
         static string ConfigFile {
             get { return UserProfile.Current.ConfigDir.Combine("ViewInAndroidStudio.xml");}

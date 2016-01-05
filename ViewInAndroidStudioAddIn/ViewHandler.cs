@@ -20,15 +20,15 @@ namespace ViewInAndroidStudio
             base.Run ();
             var fileToOpen =  IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
             string args = "-a \""+ Preferences.AndroidStudioLocation + "\" " + fileToOpen.FilePath.FullPath.ToString().Replace(" ", "\\ ");
-            System.Diagnostics.Process.Start (new ProcessStartInfo("open", args){UseShellExecute = false});
-
+            Process.Start (new ProcessStartInfo("open", args){UseShellExecute = false});
         }
             
 
         protected override void Update (CommandInfo info)
         {
             base.Update (info);
-            info.Visible = ProjectFileUtils.IsResourceXmlFile(IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile);
+            var file = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
+            info.Visible = file != null && file.IsResourceXmlFile();
         }
 
       

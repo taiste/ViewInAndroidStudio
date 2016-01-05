@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace ViewInAndroidStudio
 {
-    public static class ProjectFileUtils
+    public static class ProjectFileExtensions
     {
-        public static bool IsResource(ProjectFile file) 
+        public static bool IsResource(this ProjectFile file) 
         {
             if (file == null)
                 return false;
@@ -14,7 +14,7 @@ namespace ViewInAndroidStudio
         }
 
 
-        public static bool IsResourceXmlFile(ProjectFile file){
+        public static bool IsResourceXmlFile(this ProjectFile file){
             if (file == null)
                 return false;
 

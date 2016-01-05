@@ -87,7 +87,7 @@ namespace ViewInAndroidStudio
         private void CheckProjectFileNamingConventions (ProjectFile file)
         {
             ClearOwnFileErrors (file.FilePath);
-            if (ProjectFileUtils.IsResource (file)) {
+            if (file.IsResource ()) {
                 if (file.FilePath.FileName.Split ('.').Last ().ToLowerInvariant () == "axml") {
                     TaskService.Errors.Add (new Task (file.FilePath, "Layout file has axml extension", 0, 0, TaskSeverity.Warning, TaskPriority.Normal, null, this));
                 }
