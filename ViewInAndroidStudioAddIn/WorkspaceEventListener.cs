@@ -10,7 +10,7 @@ using System.IO;
 
 namespace ViewInAndroidStudio
 {
-    public class NamingConventionChecker: CommandHandler
+    public class WorkspaceEventListener: CommandHandler
     {
         protected override void Run ()
         {
@@ -129,7 +129,6 @@ namespace ViewInAndroidStudio
                         CheckDirectoryNamingConvention (fp);
                     }
                 }
-
             } 
         }
     }

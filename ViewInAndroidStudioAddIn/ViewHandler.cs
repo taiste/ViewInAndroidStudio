@@ -8,6 +8,7 @@ using MonoDevelop.Ide.Tasks;
 using System.Collections.Generic;
 using MonoDevelop.Core;
 using System.Diagnostics;
+using System.IO;
 
 namespace ViewInAndroidStudio
 {
@@ -20,10 +21,14 @@ namespace ViewInAndroidStudio
             base.Run ();
             var fileToOpen =  IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
             string args = "-a \""+ Preferences.AndroidStudioLocation + "\" " + fileToOpen.FilePath.FullPath.ToString().Replace(" ", "\\ ");
+            using (var a = File.OpenText ("EmptyTextFile.txt")) {
+                var str = a.ReadToEnd ();
+                System.Diagnostics.Debug.WriteLine (str);
+            }
             Process.Start (new ProcessStartInfo("open", args){UseShellExecute = false});
         }
             
-
+                                     
         protected override void Update (CommandInfo info)
         {
             base.Update (info);

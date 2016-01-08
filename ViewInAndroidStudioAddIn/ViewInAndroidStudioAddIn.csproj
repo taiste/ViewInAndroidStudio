@@ -32,10 +32,10 @@
     <Compile Include="Properties\AddinInfo.cs" />
     <Compile Include="ViewHandler.cs" />
     <Compile Include="ViewInAndroidStudioCommands.cs" />
-    <Compile Include="NamingConventionChecker.cs" />
     <Compile Include="Preferences.cs" />
     <Compile Include="GeneralOptions.cs" />
     <Compile Include="ProjectFileExtensions.cs" />
+    <Compile Include="WorkspaceEventListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Manifest.addin.xml" />

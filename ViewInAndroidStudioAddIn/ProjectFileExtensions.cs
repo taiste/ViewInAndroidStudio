@@ -20,7 +20,7 @@ namespace ViewInAndroidStudio
 
             bool isXml = file.Name.Split ('.').Last ().ToLowerInvariant().EndsWith("xml");
 
-            return isXml && IsResource(file);
+            return isXml && file.IsResource();
         }
     }
 }
