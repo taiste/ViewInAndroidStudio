@@ -17,50 +17,50 @@ namespace ViewInAndroidStudio
     {
       
 
-       protected override void Run ()
+        protected override void Run ()
         {
             base.Run ();
 
 
-            var fileToOpen =  IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
+            var fileToOpen = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
 
             if (!ProjectHandler.IsProjectCreated (fileToOpen.Project)) {
                 ProjectHandler.CreateProject (fileToOpen.Project);
             }
 
             var androidStudioFilePath = ProjectHandler.GetAndroidStudioProjectResourceDirectoryPath (fileToOpen.Project);
-            androidStudioFilePath = androidStudioFilePath.Combine( 
+            androidStudioFilePath = androidStudioFilePath.Combine (
                 fileToOpen.FilePath.FullPath.ToString ()
-                .Split (new string[]{"Resources"}, StringSplitOptions.None)[1]
-                .Substring(1)
+                .Split (new string[]{ "Resources" }, StringSplitOptions.None) [1]
+                .Substring (1)
             );
             
-            OpenFileInAndroidStudio (ProjectHandler.GetAndroidStudioProjectPath(fileToOpen.Project), androidStudioFilePath);
+            OpenFileInAndroidStudio (ProjectHandler.GetAndroidStudioProjectPath (fileToOpen.Project), androidStudioFilePath);
         }
-            
-        public static void OpenFileInAndroidStudio(params string[] filePath)
+
+        public static void OpenFileInAndroidStudio (params string[] filePath)
         {
-            if (!File.Exists(Preferences.AndroidStudioLocation)) {
-                MessageDialog dialog = new MessageDialog(IdeApp.Workbench.RootWindow,
-                    DialogFlags.DestroyWithParent, 
-                    MessageType.Error, 
-                    ButtonsType.Ok,
-                    "Android Studio executable not found at {0}, please locate the executable in Preferences.",
-                    Preferences.AndroidStudioLocation);
-                dialog.Run();
-                dialog.Destroy();
+            if (!File.Exists (Preferences.AndroidStudioLocation)) {
+                MessageDialog dialog = new MessageDialog (IdeApp.Workbench.RootWindow,
+                                           DialogFlags.DestroyWithParent, 
+                                           MessageType.Error, 
+                                           ButtonsType.Ok,
+                                           "Android Studio executable not found at {0}, please locate the executable in Preferences.",
+                                           Preferences.AndroidStudioLocation);
+                dialog.Run ();
+                dialog.Destroy ();
                 return;
             }
 
-            string args = filePath.Select( s=> "\"" + s + "\"").Aggregate("",(a,s)=>a + " " + s);
-            Process.Start (new ProcessStartInfo(Preferences.AndroidStudioLocation, args));
+            string args = filePath.Select (s => "\"" + s + "\"").Aggregate ("", (a, s) => a + " " + s);
+            Process.Start (new ProcessStartInfo (Preferences.AndroidStudioLocation, args));
         }
-                                     
+
         protected override void Update (CommandInfo info)
         {
             base.Update (info);
             var file = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
-            info.Visible = file != null && file.IsResourceXmlFile();
+            info.Visible = file != null && file.IsResourceXmlFile ();
         }
 
       

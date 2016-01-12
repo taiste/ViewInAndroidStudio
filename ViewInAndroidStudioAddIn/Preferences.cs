@@ -6,7 +6,8 @@ using System.Xml;
 
 namespace ViewInAndroidStudio
 {
-    class AddinConfig {
+    class AddinConfig
+    {
         [ItemProperty]
         public string AndroidStudioLocation = "/Applications/Android Studio.app/Contents/MacOS/studio";
     }
@@ -23,29 +24,31 @@ namespace ViewInAndroidStudio
         private static readonly DataContext dataContext = new DataContext ();
 
         static string ConfigFile {
-            get { return UserProfile.Current.ConfigDir.Combine("ViewInAndroidStudio.xml");}
+            get { return UserProfile.Current.ConfigDir.Combine ("ViewInAndroidStudio.xml"); }
         }
 
 
-        public static void SaveConfig() {
+        public static void SaveConfig ()
+        {
             if (configuration != null) {
                 XmlDataSerializer s = new XmlDataSerializer (dataContext);
-                using (XmlTextWriter wr = new XmlTextWriter(File.CreateText(ConfigFile))){
+                using (XmlTextWriter wr = new XmlTextWriter (File.CreateText (ConfigFile))) {
                     wr.Formatting = Formatting.Indented;
                     s.Serialize (wr, configuration, typeof(AddinConfig)); 
                 }
             }
         }
 
-        private static AddinConfig GetConfig (){
+        private static AddinConfig GetConfig ()
+        {
             if (configuration != null) {
                 return configuration;
             }
             if (File.Exists (ConfigFile)) {
                 try {
-                    XmlDataSerializer s = new XmlDataSerializer(dataContext);
-                    using (var reader = File.OpenText(ConfigFile)){
-                        configuration = (AddinConfig)s.Deserialize(reader, typeof(AddinConfig));
+                    XmlDataSerializer s = new XmlDataSerializer (dataContext);
+                    using (var reader = File.OpenText (ConfigFile)) {
+                        configuration = (AddinConfig)s.Deserialize (reader, typeof(AddinConfig));
                     }
                 } catch {
                     ((FilePath)ConfigFile).Delete ();

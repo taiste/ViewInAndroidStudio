@@ -6,7 +6,7 @@ namespace ViewInAndroidStudio
 {
     public static class ProjectFileExtensions
     {
-        public static bool IsResource(this ProjectFile file) 
+        public static bool IsResource (this ProjectFile file)
         {
             if (file == null)
                 return false;
@@ -14,13 +14,14 @@ namespace ViewInAndroidStudio
         }
 
 
-        public static bool IsResourceXmlFile(this ProjectFile file){
+        public static bool IsResourceXmlFile (this ProjectFile file)
+        {
             if (file == null)
                 return false;
 
-            bool isXml = file.Name.Split ('.').Last ().ToLowerInvariant().EndsWith("xml");
+            bool isXml = file.Name.Split ('.').Last ().ToLowerInvariant ().EndsWith ("xml");
 
-            return isXml && file.IsResource();
+            return isXml && file.IsResource ();
         }
     }
 }

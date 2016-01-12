@@ -23,6 +23,8 @@ namespace ViewInAndroidStudio
             IdeApp.Workspace.FileRemovedFromProject += (sender, e) => ClearOwnFileErrors (e.Select (ea => ea.ProjectFile.FilePath));
 
             IdeApp.Workspace.SolutionLoaded += (sender, e) => CheckProjectNamingConventions ();
+
+
         }
 
         void IdeApp_Workspace_FileRenamedInProject (object sender, ProjectFileRenamedEventArgs e)

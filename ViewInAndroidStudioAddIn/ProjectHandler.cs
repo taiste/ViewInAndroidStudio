@@ -38,7 +38,7 @@ namespace ViewInAndroidStudio
                 return;
             }
 
-            ProgressDialog pd = new ProgressDialog (IdeApp.Workbench.RootWindow,false, false);
+            ProgressDialog pd = new ProgressDialog (IdeApp.Workbench.RootWindow, false, false);
             pd.Progress = 1;
             pd.Message = "Linking project " + p.Name + "...";
             pd.Deletable = false;
@@ -47,10 +47,10 @@ namespace ViewInAndroidStudio
             var link = Process.Start ("android_xamarin_linker.sh", "\"" + fp.FullPath + "/\" \"" + p.BaseDirectory.Combine ("Resources").FullPath + "/\"");
             link.WaitForExit ();
             pd.Hide ();
-            pd.Respond(ResponseType.Accept);
+            pd.Respond (ResponseType.Accept);
             pd.Destroy ();
 
-            ViewHandler.OpenFileInAndroidStudio (GetProjectFilePath(p).Combine ("TaisteAndroid").Combine("build.gradle"));
+            ViewHandler.OpenFileInAndroidStudio (GetProjectFilePath (p).Combine ("TaisteAndroid").Combine ("build.gradle"));
         }
 
         public static FilePath GetProjectFilePath (Project p)
@@ -74,8 +74,9 @@ namespace ViewInAndroidStudio
             return projectsPath.Combine (ProjectsDirectory);        
         }
 
-        public static FilePath GetAndroidStudioProjectResourceDirectoryPath(Project p) {
-            return GetAndroidStudioProjectPath(p).Combine("app").Combine("src").Combine("main").Combine("res");
+        public static FilePath GetAndroidStudioProjectResourceDirectoryPath (Project p)
+        {
+            return GetAndroidStudioProjectPath (p).Combine ("app").Combine ("src").Combine ("main").Combine ("res");
         }
     }
 }
