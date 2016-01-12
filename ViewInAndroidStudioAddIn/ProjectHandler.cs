@@ -74,8 +74,8 @@ namespace ViewInAndroidStudio
             return projectsPath.Combine (ProjectsDirectory);        
         }
 
-        public static FilePath GetProjectResourceDirectoryPath(Project p) {
-            return GetProjectFilePath (p).Combine ("TaisteAndroid").Combine("app").Combine("src").Combine("main").Combine("res");
+        public static FilePath GetAndroidStudioProjectResourceDirectoryPath(Project p) {
+            return GetAndroidStudioProjectPath(p).Combine("app").Combine("src").Combine("main").Combine("res");
         }
     }
 }

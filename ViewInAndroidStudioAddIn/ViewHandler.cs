@@ -28,7 +28,7 @@ namespace ViewInAndroidStudio
                 ProjectHandler.CreateProject (fileToOpen.Project);
             }
 
-            var androidStudioFilePath = ProjectHandler.GetProjectResourceDirectoryPath (fileToOpen.Project);
+            var androidStudioFilePath = ProjectHandler.GetAndroidStudioProjectResourceDirectoryPath (fileToOpen.Project);
             androidStudioFilePath = androidStudioFilePath.Combine( 
                 fileToOpen.FilePath.FullPath.ToString ()
                 .Split (new string[]{"Resources"}, StringSplitOptions.None)[1]

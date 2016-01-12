@@ -2,6 +2,7 @@
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Ide;
 using System.Linq;
+using MonoDevelop.Projects;
 
 namespace ViewInAndroidStudio
 {
@@ -10,17 +11,17 @@ namespace ViewInAndroidStudio
         protected override void Run ()
         {
             base.Run ();
-            var projects = IdeApp.Workspace.GetAllProjects ();
-            foreach (var project in projects) {
-                if (project.GetProjectTypes ().Contains ("MonoDroid")) {
-                    ProjectHandler.CreateProject (project);
-                }
+            var project = IdeApp.ProjectOperations.CurrentSelectedItem as Project;
+            if (project != null && project.GetProjectTypes ().Contains ("MonoDroid")) {
+                ProjectHandler.CreateProject (project);
             }
         }
 
         protected override void Update (CommandInfo info)
         {
             base.Update (info);
+            var file = IdeApp.ProjectOperations.CurrentSelectedItem as Project;
+            info.Visible = file != null && file.GetProjectTypes ().Contains ("MonoDroid"); 
         }
     }
 }

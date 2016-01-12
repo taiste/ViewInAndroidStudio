@@ -24,9 +24,6 @@
         path="/MonoDevelop/Ide/ContextMenu/ProjectPad">
         <CommandItem
             id="ViewInAndroidStudio.ViewInAndroidStudioCommands.ViewFile" />
-    </Extension>
-     <Extension
-        path="/MonoDevelop/Ide/MainMenu/Tools">
         <CommandItem
             id="ViewInAndroidStudio.ViewInAndroidStudioCommands.RecreateProject" />
     </Extension>
