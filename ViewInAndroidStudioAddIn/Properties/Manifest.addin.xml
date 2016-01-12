@@ -11,7 +11,7 @@
         <Section id="ViewInAndroidStudio" _label="Android Studio" />
     </Extension>
     <Extension path="/MonoDevelop/Ide/StartupHandlers">
-        <Class id ="ViewInAndroidStudio.NamingConventionChecker"/>
+        <Class id ="ViewInAndroidStudio.WorkspaceEventListener"/>
     </Extension>
     <Extension path = "/MonoDevelop/Ide/GlobalOptionsDialog/ViewInAndroidStudio">
         <Section id = "ViewInAndroidStudioGeneral" _label = "General" fill="true" class="ViewInAndroidStudio.GeneralOptions" />
