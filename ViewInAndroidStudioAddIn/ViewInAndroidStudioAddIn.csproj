@@ -36,6 +36,8 @@
     <Compile Include="GeneralOptions.cs" />
     <Compile Include="ProjectFileExtensions.cs" />
     <Compile Include="WorkspaceEventListener.cs" />
+    <Compile Include="ProjectHandler.cs" />
+    <Compile Include="RecreateProjectHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Manifest.addin.xml" />
@@ -44,5 +46,9 @@
   <Import Project="..\packages\MonoDevelop.Addins.0.2.3\build\net40\MonoDevelop.Addins.targets" Condition="Exists('..\packages\MonoDevelop.Addins.0.2.3\build\net40\MonoDevelop.Addins.targets')" />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddinFile Include="android_xamarin_linker.sh" />
+    <AddinFile Include="taisteAndroid.zip" />
   </ItemGroup>
 </Project>
