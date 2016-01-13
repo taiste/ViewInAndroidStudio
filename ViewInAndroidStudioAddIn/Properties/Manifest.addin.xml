@@ -3,28 +3,28 @@
     <Extension
         path="/MonoDevelop/Ide/Commands">
         <Command
-            id="ViewInAndroidStudio.ViewInAndroidStudioCommands.ViewFile"
+            id="Taiste.ViewInAndroidStudio.ViewInAndroidStudioCommands.ViewFile"
             _label="View in Android Studio"
-            defaultHandler="ViewInAndroidStudio.ViewHandler" />
+            defaultHandler="Taiste.ViewInAndroidStudio.ViewHandler" />
              <Command
             id="ViewInAndroidStudio.ViewInAndroidStudioCommands.RecreateProject"
             _label="(Re)create Android Studio project"
-            defaultHandler="ViewInAndroidStudio.RecreateProjectHandler" />
+            defaultHandler="Taiste.ViewInAndroidStudio.RecreateProjectHandler" />
     </Extension>
     <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog">
-        <Section id="ViewInAndroidStudio" _label="Android Studio" />
+        <Section id="Taiste.ViewInAndroidStudio" _label="Android Studio" />
     </Extension>
     <Extension path="/MonoDevelop/Ide/StartupHandlers">
-        <Class id ="ViewInAndroidStudio.WorkspaceEventListener"/>
+        <Class id ="Taiste.ViewInAndroidStudio.WorkspaceEventListener"/>
     </Extension>
     <Extension path = "/MonoDevelop/Ide/GlobalOptionsDialog/ViewInAndroidStudio">
-        <Section id = "ViewInAndroidStudioGeneral" _label = "General" fill="true" class="ViewInAndroidStudio.GeneralOptions" />
+        <Section id = "ViewInAndroidStudioGeneral" _label = "General" fill="true" class="Taiste.ViewInAndroidStudio.GeneralOptions" />
     </Extension>
     <Extension
         path="/MonoDevelop/Ide/ContextMenu/ProjectPad">
         <CommandItem
-            id="ViewInAndroidStudio.ViewInAndroidStudioCommands.ViewFile" />
+            id="Taiste.ViewInAndroidStudio.ViewInAndroidStudioCommands.ViewFile" />
         <CommandItem
-            id="ViewInAndroidStudio.ViewInAndroidStudioCommands.RecreateProject" />
+            id="Taiste.ViewInAndroidStudio.ViewInAndroidStudioCommands.RecreateProject" />
     </Extension>
 </ExtensionModel>

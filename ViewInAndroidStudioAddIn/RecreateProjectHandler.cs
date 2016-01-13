@@ -4,7 +4,7 @@ using MonoDevelop.Ide;
 using System.Linq;
 using MonoDevelop.Projects;
 
-namespace ViewInAndroidStudio
+namespace Taiste.ViewInAndroidStudio
 {
     public class RecreateProjectHandler: CommandHandler
     {
@@ -13,7 +13,7 @@ namespace ViewInAndroidStudio
             base.Run ();
             var project = IdeApp.ProjectOperations.CurrentSelectedItem as Project;
             if (project != null && project.GetProjectTypes ().Contains ("MonoDroid")) {
-                ProjectHandler.CreateProject (project);
+                ProjectHelpers.CreateAndroidStudioProject (project);
             }
         }
 

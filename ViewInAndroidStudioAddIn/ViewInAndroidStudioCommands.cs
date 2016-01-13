@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ViewInAndroidStudio
+namespace Taiste.ViewInAndroidStudio
 {
     public enum ViewInAndroidStudioCommands
     {

@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using Gtk;
 
-namespace ViewInAndroidStudio
+namespace Taiste.ViewInAndroidStudio
 {
     public class ViewHandler : CommandHandler
     {
@@ -21,21 +21,22 @@ namespace ViewInAndroidStudio
         {
             base.Run ();
 
+            var xamarinFileToOpen = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
+            var xamarinProject = xamarinFileToOpen.Project;
 
-            var fileToOpen = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
-
-            if (!ProjectHandler.IsProjectCreated (fileToOpen.Project)) {
-                ProjectHandler.CreateProject (fileToOpen.Project);
+            if (!ProjectHelpers.IsAndroidStudioProjectCreated (xamarinProject)) {
+                ProjectHelpers.CreateAndroidStudioProject (xamarinProject);
             }
 
-            var androidStudioFilePath = ProjectHandler.GetAndroidStudioProjectResourceDirectoryPath (fileToOpen.Project);
+            var androidStudioFilePath = ProjectHelpers.GetAndroidStudioProjectResourceDirectoryPath (xamarinProject);
+
             androidStudioFilePath = androidStudioFilePath.Combine (
-                fileToOpen.FilePath.FullPath.ToString ()
+                xamarinFileToOpen.FilePath.FullPath.ToString ()
                 .Split (new string[]{ "Resources" }, StringSplitOptions.None) [1]
                 .Substring (1)
             );
             
-            OpenFileInAndroidStudio (ProjectHandler.GetAndroidStudioProjectPath (fileToOpen.Project), androidStudioFilePath);
+            OpenFileInAndroidStudio (ProjectHelpers.GetAndroidStudioProjectPath (xamarinProject), androidStudioFilePath);
         }
 
         public static void OpenFileInAndroidStudio (params string[] filePath)

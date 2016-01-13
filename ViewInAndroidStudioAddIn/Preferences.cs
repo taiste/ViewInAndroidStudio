@@ -4,7 +4,7 @@ using System.IO;
 using MonoDevelop.Core.Serialization;
 using System.Xml;
 
-namespace ViewInAndroidStudio
+namespace Taiste.ViewInAndroidStudio
 {
     class AddinConfig
     {
@@ -58,8 +58,6 @@ namespace ViewInAndroidStudio
                 configuration = new AddinConfig ();
             }
             return configuration;
-
-
         }
     }
 }

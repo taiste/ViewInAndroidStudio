@@ -6,7 +6,7 @@
     <ProjectTypeGuids>{86F6BF2A-E449-4B3E-813B-9ACC37E5545F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{1FC0D6E1-0D53-4926-B189-57D7BA5AA964}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>ViewInAndroidStudio</RootNamespace>
+    <RootNamespace>Taiste.ViewInAndroidStudio</RootNamespace>
     <AssemblyName>ViewInAndroidStudioAddIn</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -36,8 +36,8 @@
     <Compile Include="GeneralOptions.cs" />
     <Compile Include="ProjectFileExtensions.cs" />
     <Compile Include="WorkspaceEventListener.cs" />
-    <Compile Include="ProjectHandler.cs" />
     <Compile Include="RecreateProjectHandler.cs" />
+    <Compile Include="ProjectHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Manifest.addin.xml" />

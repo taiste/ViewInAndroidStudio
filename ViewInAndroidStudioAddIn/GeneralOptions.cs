@@ -2,7 +2,7 @@
 using MonoDevelop.Ide.Gui.Dialogs;
 using MonoDevelop.Components;
 
-namespace ViewInAndroidStudio
+namespace Taiste.ViewInAndroidStudio
 {
     public class GeneralOptions : OptionsPanel
     {

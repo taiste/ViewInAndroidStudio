@@ -8,7 +8,7 @@ using MonoDevelop.Components.Commands;
 using MonoDevelop.Core;
 using System.IO;
 
-namespace ViewInAndroidStudio
+namespace Taiste.ViewInAndroidStudio
 {
     public class WorkspaceEventListener: CommandHandler
     {
@@ -18,11 +18,11 @@ namespace ViewInAndroidStudio
 
             IdeApp.Workspace.FileRenamedInProject += IdeApp_Workspace_FileRenamedInProject;
 
-            IdeApp.Workspace.FileAddedToProject += (sender, e) => CheckProjectFileNamingConventions (e.Select (ea => ea.ProjectFile));
+            IdeApp.Workspace.FileAddedToProject += (sender, e) => CheckProjectFileName (e.Select (ea => ea.ProjectFile));
 
             IdeApp.Workspace.FileRemovedFromProject += (sender, e) => ClearOwnFileErrors (e.Select (ea => ea.ProjectFile.FilePath));
 
-            IdeApp.Workspace.SolutionLoaded += (sender, e) => CheckProjectNamingConventions ();
+            IdeApp.ProjectOperations.CurrentProjectChanged += (sender, e) => CheckProjectNamingConventions ();
 
 
         }
@@ -30,12 +30,12 @@ namespace ViewInAndroidStudio
         void IdeApp_Workspace_FileRenamedInProject (object sender, ProjectFileRenamedEventArgs e)
         {
             
-            foreach (var ea in e) {
+            foreach (var file in e) {
                
-                if (ea.OldName.FileName == ea.NewName.FileName) {
+                if (file.OldName.FileName == file.NewName.FileName) {
                     //a directory filename changed
-                    var oldDir = ea.OldName.ParentDirectory;
-                    var newDir = ea.NewName.ParentDirectory;
+                    var oldDir = file.OldName.ParentDirectory;
+                    var newDir = file.NewName.ParentDirectory;
 
                     if (!newDir.ToString ().Contains ("Resources")) {
                         return;
@@ -47,15 +47,14 @@ namespace ViewInAndroidStudio
                     }
 
                     ClearOwnFileErrors (oldDir);
-                    CheckDirectoryNamingConvention (newDir);
+                    CheckDirectoryName (newDir);
                 } else {
-                    ClearOwnFileErrors (ea.OldName);
-                    CheckProjectFileNamingConventions (ea.ProjectFile);
+                    ClearOwnFileErrors (file.OldName);
+                    CheckProjectFileName (file.ProjectFile);
                 }
             }
         }
 
-  
         private void ClearOwnFileErrors (IEnumerable<FilePath> paths)
         {
             foreach (var path in paths) {
@@ -72,21 +71,14 @@ namespace ViewInAndroidStudio
             }
         }
 
-
-
-        protected override void Update (CommandInfo info)
-        {
-            base.Update (info);
-        }
-
-        private void CheckProjectFileNamingConventions (IEnumerable<ProjectFile> files)
+        private void CheckProjectFileName (IEnumerable<ProjectFile> files)
         {
             foreach (var projectFile in files) {
-                CheckProjectFileNamingConventions (projectFile);
+                CheckProjectFileName (projectFile);
             }
         }
 
-        private void CheckProjectFileNamingConventions (ProjectFile file)
+        private void CheckProjectFileName (ProjectFile file)
         {
             ClearOwnFileErrors (file.FilePath);
             if (file.IsResource ()) {
@@ -99,7 +91,7 @@ namespace ViewInAndroidStudio
             }
         }
 
-        private void CheckDirectoryNamingConvention (FilePath fp)
+        private void CheckDirectoryName (FilePath fp)
         {
             ClearOwnFileErrors (fp);
             if (fp.FileName.Any (Char.IsUpper)) {
@@ -107,10 +99,14 @@ namespace ViewInAndroidStudio
             }
         }
 
-        private  void CheckProjectNamingConventions ()
+        private void CheckProjectNamingConventions ()
         {
-            var projects = IdeApp.Workspace.GetAllProjects ();
+            IEnumerable<Project> projects = IdeApp.Workspace.GetAllProjects ().ToList ();
+
+            projects = projects.Where (p => p.GetProjectTypes ().Contains ("MonoDroid"));
+
             var fileLists = projects.Select (p => p.Files);
+
             var files = fileLists.Aggregate (new List<ProjectFile> (), (acc, li) => {
                 acc.AddRange (li);
                 return acc;
@@ -119,16 +115,15 @@ namespace ViewInAndroidStudio
             TaskService.Errors.ClearByOwner (this);
 
             foreach (var file in files) {
-                CheckProjectFileNamingConventions (file);
+                CheckProjectFileName (file);
             }
 
             var directories = projects.Select (p => p.BaseDirectory);
             foreach (var baseDirectory in directories) {
-                var resDirPath = FilePath.Build (baseDirectory.FullPath, "Resources").FullPath;
+                var resDirPath = baseDirectory.Combine ("Resources");
                 if (Directory.Exists (resDirPath)) {
                     foreach (var dir in Directory.EnumerateDirectories (resDirPath)) {
-                        var fp = new FilePath (dir);
-                        CheckDirectoryNamingConvention (fp);
+                        CheckDirectoryName (new FilePath (dir));
                     }
                 }
             } 
