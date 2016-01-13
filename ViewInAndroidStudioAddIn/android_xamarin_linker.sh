@@ -1,19 +1,15 @@
 #!/bin/bash
 create_project() {
     unzip taisteAndroid.zip -d $1
-    echo "done unzipping"
 }
 
 delete_fodder() {
     #Find MainActivity and remove it
     find $1 -name 'MainActivity.java' -exec rm -f {} \;
-    echo "removing"
-    rm -r $1TaisteAndroid/app/src/main/res/*
 }
 
 link_files() {
     #Link -s all res files from the Xamarin Android project to Android Studio
-    echo "linking..."
     find $2 -name '*' -maxdepth 1 -mindepth 1 -exec ln -s {} $1"TaisteAndroid/app/src/main/res" \;
 }
 
