@@ -7,7 +7,7 @@
             _label="View in Android Studio"
             defaultHandler="Taiste.ViewInAndroidStudio.ViewHandler" />
              <Command
-            id="ViewInAndroidStudio.ViewInAndroidStudioCommands.RecreateProject"
+            id="Taiste.ViewInAndroidStudio.ViewInAndroidStudioCommands.RecreateProject"
             _label="(Re)create Android Studio project"
             defaultHandler="Taiste.ViewInAndroidStudio.RecreateProjectHandler" />
     </Extension>

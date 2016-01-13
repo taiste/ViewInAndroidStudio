@@ -18,19 +18,19 @@ namespace Taiste.ViewInAndroidStudio
 
         public static bool IsAndroidStudioProjectCreated (Project p)
         {
-            var path = GetTempProjectPath (p).FullPath;
+            var path = GetAndroidStudioProjectPath (p).FullPath;
             return Directory.Exists (path);
         }
 
         public static void CreateAndroidStudioProject (Project p)
         {
-            FilePath fp = GetTempProjectPath (p);
+            FilePath androidStudioProjectPath = GetAndroidStudioProjectPath (p);
 
             try {
-                if (Directory.Exists (fp)) {
-                    Directory.Delete (fp, true);
+                if (Directory.Exists (androidStudioProjectPath)) {
+                    Directory.Delete (androidStudioProjectPath, true);
                 }
-                Directory.CreateDirectory (fp);
+                Directory.CreateDirectory (androidStudioProjectPath);
             } catch (IOException e) {
                 var md = new MessageDialog (IdeApp.Workbench.RootWindow,
                              DialogFlags.DestroyWithParent, 
@@ -47,25 +47,21 @@ namespace Taiste.ViewInAndroidStudio
 
             Syscall.chmod (scriptPath, FilePermissions.S_IRWXU | (FilePermissions.S_IRWXG ^ FilePermissions.S_IWGRP) | (FilePermissions.S_IRWXO ^ FilePermissions.S_IWOTH));
 
-            var scriptArguments = "\"" + fp.FullPath + Path.DirectorySeparatorChar +
-                                  "\" \"" + p.BaseDirectory.Combine ("Resources").FullPath + Path.DirectorySeparatorChar + "\"";
+            var scriptArguments = "\"" + androidStudioProjectPath + Path.DirectorySeparatorChar +
+                                  "\" \"" + p.BaseDirectory.Combine ("Resources") + Path.DirectorySeparatorChar + "\"";
             
             var process = 
                 Runtime.ProcessService.StartProcess ("bash", "-c '\"" + scriptPath + "\" " + scriptArguments + "'", scriptPath.ParentDirectory, null);
             process.WaitForExit ();
 
-            ViewHandler.OpenFileInAndroidStudio (GetAndroidStudioProjectPath (p).Combine ("build.gradle"));
-        }
-
-        public static FilePath GetTempProjectPath (Project p)
-        {
-            return GetTempProjectsDirectoryPath ().Combine (p.Name);
+            ViewHandler.OpenFileInAndroidStudio (androidStudioProjectPath.Combine ("build.gradle"));
         }
 
         public static FilePath GetAndroidStudioProjectPath (Project p)
         {
-            return GetTempProjectPath (p).Combine ("TaisteAndroid");
+            return GetProjectsDirectoryPath ().Combine (p.Name);
         }
+            
 
         private static FilePath GetUserHomePath ()
         {
@@ -76,7 +72,7 @@ namespace Taiste.ViewInAndroidStudio
             );
         }
 
-        public static FilePath GetTempProjectsDirectoryPath ()
+        public static FilePath GetProjectsDirectoryPath ()
         {
             return GetUserHomePath ().Combine (ProjectsDirectory);        
         }
