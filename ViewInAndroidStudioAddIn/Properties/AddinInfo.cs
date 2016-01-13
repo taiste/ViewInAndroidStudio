@@ -4,12 +4,11 @@ using Mono.Addins.Description;
 
 [assembly:Addin (
     "ViewInAndroidStudioAddIn", 
-    Namespace = "ViewInAndroidStudioAddIn",
-    Version = "1.0"
+    Namespace = "Taiste",
+    Version = "0.1"
 )]
 
-[assembly:AddinName ("ViewInAndroidStudioAddIn")]
+[assembly:AddinName ("View In Android Studio")]
 [assembly:AddinCategory ("IDE extensions")]
-[assembly:AddinDescription ("ViewInAndroidStudioAddIn")]
-[assembly:AddinAuthor ("Ossi Väre")]
-
+[assembly:AddinDescription ("Addin that adds shortucts for viewing Android xml files in Android Studio")]
+[assembly:AddinAuthor ("Taiste")]

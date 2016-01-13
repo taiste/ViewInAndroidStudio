@@ -51,4 +51,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Posix" />
+  </ItemGroup>
 </Project>
