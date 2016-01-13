@@ -10,7 +10,7 @@ delete_fodder() {
 
 link_files() {
     #Link -s all res files from the Xamarin Android project to Android Studio
-    find $2 -name '*' -maxdepth 1 -mindepth 1 -exec ln -s {} $1"TaisteAndroid/app/src/main/res" \;
+    find $2 -name '*' -maxdepth 1 -mindepth 1 -exec ln -s {} $1"app/src/main/res" \;
 }
 
 if [[ $# -eq 0 ]] ; then
