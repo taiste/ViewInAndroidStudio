@@ -1,6 +1,6 @@
-﻿using MonoDevelop.Projects;
-using System.Linq;
+﻿using System.Linq;
 using MonoDevelop.Core;
+using MonoDevelop.Projects;
 
 namespace Taiste.ViewInAndroidStudio.Util
 {

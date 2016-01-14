@@ -1,12 +1,12 @@
 ﻿using System;
-using MonoDevelop.Projects;
-using MonoDevelop.Core;
 using System.IO;
-using Gtk;
-using System.Reflection;
-using Mono.Unix.Native;
-using MonoDevelop.Core.Execution;
 using System.Linq;
+using System.Reflection;
+using Gtk;
+using Mono.Unix.Native;
+using MonoDevelop.Core;
+using MonoDevelop.Core.Execution;
+using MonoDevelop.Projects;
 using Taiste.ViewInAndroidStudio.Commands;
 using Taiste.ViewInAndroidStudio.Preferences;
 
@@ -15,12 +15,6 @@ namespace Taiste.ViewInAndroidStudio.Util
     public static class ProjectExtensions
     {
         const string ScriptFileName = "android_xamarin_linker.sh";
-
-        public static bool IsAndroidStudioProjectCreated (this Project p)
-        {
-            var path = GetAndroidStudioProjectPath (p).FullPath;
-            return Directory.Exists (path);
-        }
 
         public static void CreateAndroidStudioProject (this Project p)
         {
@@ -36,8 +30,9 @@ namespace Taiste.ViewInAndroidStudio.Util
                 return;
             }
 
-            FilePath scriptPath = new FilePath (Assembly.GetExecutingAssembly ().Location);
-            scriptPath = scriptPath.ParentDirectory.Combine (ScriptFileName);
+            FilePath scriptPath = 
+                new FilePath (Assembly.GetExecutingAssembly ().Location)
+                .ParentDirectory.Combine (ScriptFileName);
 
             Syscall.chmod (scriptPath, FilePermissions.S_IRWXU | (FilePermissions.S_IRWXG ^ FilePermissions.S_IWGRP) | (FilePermissions.S_IRWXO ^ FilePermissions.S_IWOTH));
 

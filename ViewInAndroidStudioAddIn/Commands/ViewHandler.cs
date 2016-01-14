@@ -1,14 +1,14 @@
 ﻿using System;
-using MonoDevelop.Components.Commands;
-using MonoDevelop.Ide;
-using MonoDevelop.Projects;
-using System.Linq;
-using MonoDevelop.Core;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Gtk;
-using Taiste.ViewInAndroidStudio.Util;
+using MonoDevelop.Components.Commands;
+using MonoDevelop.Core;
+using MonoDevelop.Ide;
+using MonoDevelop.Projects;
 using Taiste.ViewInAndroidStudio.Preferences;
+using Taiste.ViewInAndroidStudio.Util;
 
 namespace Taiste.ViewInAndroidStudio.Commands
 {

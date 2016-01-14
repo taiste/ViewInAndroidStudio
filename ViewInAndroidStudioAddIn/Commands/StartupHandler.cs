@@ -1,12 +1,12 @@
 ﻿using System;
-using MonoDevelop.Ide;
-using System.Linq;
 using System.Collections.Generic;
-using MonoDevelop.Projects;
-using MonoDevelop.Ide.Tasks;
+using System.IO;
+using System.Linq;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Core;
-using System.IO;
+using MonoDevelop.Ide;
+using MonoDevelop.Ide.Tasks;
+using MonoDevelop.Projects;
 using Taiste.ViewInAndroidStudio.Util;
 
 namespace Taiste.ViewInAndroidStudio.Commands

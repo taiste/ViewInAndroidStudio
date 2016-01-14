@@ -1,5 +1,5 @@
-﻿using MonoDevelop.Ide.Gui.Dialogs;
-using MonoDevelop.Components;
+﻿using MonoDevelop.Components;
+using MonoDevelop.Ide.Gui.Dialogs;
 
 namespace Taiste.ViewInAndroidStudio.Preferences
 {

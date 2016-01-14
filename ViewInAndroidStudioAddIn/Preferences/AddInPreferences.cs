@@ -1,8 +1,8 @@
 ﻿using System;
-using MonoDevelop.Core;
 using System.IO;
-using MonoDevelop.Core.Serialization;
 using System.Xml;
+using MonoDevelop.Core;
+using MonoDevelop.Core.Serialization;
 
 namespace Taiste.ViewInAndroidStudio.Preferences
 {
