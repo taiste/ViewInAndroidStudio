@@ -30,22 +30,27 @@ namespace Taiste.ViewInAndroidStudio.Util
                 return;
             }
 
+            p.CreateAndroidStudioProjectStructure ();
+
+            ViewHandler.OpenFileInAndroidStudio (androidStudioProjectPath.Combine ("build.gradle"));
+        }
+
+        static void CreateAndroidStudioProjectStructure(this Project p) 
+        {
             FilePath scriptPath = 
                 new FilePath (Assembly.GetExecutingAssembly ().Location)
-                .ParentDirectory.Combine (ScriptFileName);
+                    .ParentDirectory.Combine (ScriptFileName);
 
             Syscall.chmod (scriptPath, FilePermissions.S_IRWXU | (FilePermissions.S_IRWXG ^ FilePermissions.S_IWGRP) | (FilePermissions.S_IRWXO ^ FilePermissions.S_IWOTH));
 
             var scriptArguments = 
-                (androidStudioProjectPath + Path.DirectorySeparatorChar).Quote ()
+                (p.GetAndroidStudioProjectPath() + Path.DirectorySeparatorChar).Quote ()
                 + " "
                 + (p.BaseDirectory.Combine ("Resources") + Path.DirectorySeparatorChar).Quote ();
-            
+
             var process = 
                 Runtime.ProcessService.StartProcess ("bash", "-c '" + scriptPath.ToString ().Quote () + " " + scriptArguments + "'", scriptPath.ParentDirectory, null);
-            process.WaitForExit ();
-
-            ViewHandler.OpenFileInAndroidStudio (androidStudioProjectPath.Combine ("build.gradle"));
+            process.WaitForExit ();   
         }
 
         public static FilePath GetAndroidStudioProjectPath (this Project p)
