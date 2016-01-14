@@ -3,11 +3,6 @@ create_project() {
     unzip taisteAndroid.zip -d $1
 }
 
-delete_fodder() {
-    #Find MainActivity and remove it
-    find $1 -name 'MainActivity.java' -exec rm -f {} \;
-}
-
 link_files() {
     #Link -s all res files from the Xamarin Android project to Android Studio
     find $2 -name '*' -maxdepth 1 -mindepth 1 -exec ln -s {} $1"app/src/main/res" \;
@@ -25,6 +20,5 @@ Program commands are:
     exit 0
 else
     create_project $1
-    delete_fodder $1
     link_files $1 $2
 fi
