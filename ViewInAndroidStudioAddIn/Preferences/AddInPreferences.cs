@@ -10,6 +10,8 @@ namespace Taiste.ViewInAndroidStudio.Preferences
     {
         [ItemProperty]
         public string AndroidStudioLocation = "/Applications/Android Studio.app/Contents/MacOS/studio";
+        [ItemProperty]
+        public bool AutomaticRename = true;
     }
 
 
@@ -20,6 +22,11 @@ namespace Taiste.ViewInAndroidStudio.Preferences
         public static string AndroidStudioLocation {
             get { return GetConfig ().AndroidStudioLocation; }
             set { GetConfig ().AndroidStudioLocation = value; }
+        }
+
+        public static bool AutomaticRename {
+            get { return GetConfig ().AutomaticRename; }
+            set { GetConfig ().AutomaticRename = value; }
         }
 
         private static AddinConfig configuration;

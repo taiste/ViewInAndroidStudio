@@ -6,6 +6,7 @@ namespace Taiste.ViewInAndroidStudio.Preferences
     public class GeneralOptions : OptionsPanel
     {
         FileEntry entry;
+        Gtk.CheckButton automaticRenameButton;
 
         public override Gtk.Widget CreatePanelWidget ()
         {
@@ -22,8 +23,13 @@ namespace Taiste.ViewInAndroidStudio.Preferences
             entry = new FileEntry ();
             entry.Path = AddInPreferences.AndroidStudioLocation;
 
+            automaticRenameButton = new Gtk.CheckButton ("Automatically rename resource files");
+            automaticRenameButton.Mode = true;
+            automaticRenameButton.Active = AddInPreferences.AutomaticRename;
+
             box.PackStart (labelBox, false, false, 0);
             box.PackStart (entry, false, false, 0);
+            box.PackStart (automaticRenameButton, false, false, 0);
             box.ShowAll ();
             return box;
 
@@ -32,6 +38,7 @@ namespace Taiste.ViewInAndroidStudio.Preferences
         public override void ApplyChanges ()
         {
             AddInPreferences.AndroidStudioLocation = entry.Path;
+            AddInPreferences.AutomaticRename = automaticRenameButton.Active;
             AddInPreferences.SaveConfig ();
         }
     }

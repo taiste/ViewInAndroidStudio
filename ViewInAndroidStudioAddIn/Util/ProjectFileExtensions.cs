@@ -24,6 +24,8 @@ namespace Taiste.ViewInAndroidStudio.Util
             return isXml && file.IsResource ();
         }
 
+
+
         public static FilePath GetAndroidStudioFilePath (this ProjectFile file)
         {
             if (!file.IsResource ()) {
