@@ -96,7 +96,7 @@ namespace Taiste.ViewInAndroidStudio.Commands
         {
             ClearOwnFileErrors (fp);
             if (fp.FileName.Any (Char.IsUpper)) {
-                TaskService.Errors.Add (new Task (fp, "Resource folder has captial letter in filename", 0, 0, TaskSeverity.Warning, TaskPriority.Normal, null, this));
+                TaskService.Errors.Add (new Task (fp, "Resource folder has capital letter in filename", 0, 0, TaskSeverity.Warning, TaskPriority.Normal, null, this));
             }
         }
 
