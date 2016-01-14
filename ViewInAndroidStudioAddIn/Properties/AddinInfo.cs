@@ -5,7 +5,7 @@ using Mono.Addins.Description;
 [assembly:Addin (
     "ViewInAndroidStudioAddIn", 
     Namespace = "Taiste",
-    Version = "0.1"
+    Version = "0.2"
 )]
 
 [assembly:AddinName ("View In Android Studio")]

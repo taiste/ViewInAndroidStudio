@@ -2,7 +2,7 @@
 using MonoDevelop.Projects;
 using System.Linq;
 
-namespace Taiste.ViewInAndroidStudio
+namespace Taiste.ViewInAndroidStudio.Util
 {
     public static class ProjectFileExtensions
     {

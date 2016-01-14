@@ -7,6 +7,7 @@ using MonoDevelop.Ide;
 using System.Reflection;
 using Mono.Unix.Native;
 using MonoDevelop.Core.Execution;
+using Taiste.ViewInAndroidStudio.Util;
 
 
 namespace Taiste.ViewInAndroidStudio
@@ -32,13 +33,7 @@ namespace Taiste.ViewInAndroidStudio
                 }
                 Directory.CreateDirectory (androidStudioProjectPath);
             } catch (IOException e) {
-                var md = new MessageDialog (IdeApp.Workbench.RootWindow,
-                             DialogFlags.DestroyWithParent, 
-                             MessageType.Error,
-                             ButtonsType.Ok,
-                             "Could not (re)create project directory: {0}", e.Message);
-                md.Run ();
-                md.Destroy ();
+                GtkHelpers.ShowDialog(String.Format("Could not (re)create project directory: {0}", e.Message), MessageType.Error);
                 return;
             }
 
@@ -47,11 +42,13 @@ namespace Taiste.ViewInAndroidStudio
 
             Syscall.chmod (scriptPath, FilePermissions.S_IRWXU | (FilePermissions.S_IRWXG ^ FilePermissions.S_IWGRP) | (FilePermissions.S_IRWXO ^ FilePermissions.S_IWOTH));
 
-            var scriptArguments = "\"" + androidStudioProjectPath + Path.DirectorySeparatorChar +
-                                  "\" \"" + p.BaseDirectory.Combine ("Resources") + Path.DirectorySeparatorChar + "\"";
+            var scriptArguments = 
+                (androidStudioProjectPath + Path.DirectorySeparatorChar).Quote()
+                + " " 
+                + (p.BaseDirectory.Combine ("Resources") + Path.DirectorySeparatorChar).Quote();
             
             var process = 
-                Runtime.ProcessService.StartProcess ("bash", "-c '\"" + scriptPath + "\" " + scriptArguments + "'", scriptPath.ParentDirectory, null);
+                Runtime.ProcessService.StartProcess ("bash", "-c '" + scriptPath.ToString().Quote() + " " + scriptArguments + "'", scriptPath.ParentDirectory, null);
             process.WaitForExit ();
 
             ViewHandler.OpenFileInAndroidStudio (androidStudioProjectPath.Combine ("build.gradle"));

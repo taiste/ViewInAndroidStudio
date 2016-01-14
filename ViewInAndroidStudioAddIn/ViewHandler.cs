@@ -10,6 +10,7 @@ using MonoDevelop.Core;
 using System.Diagnostics;
 using System.IO;
 using Gtk;
+using Taiste.ViewInAndroidStudio.Util;
 
 namespace Taiste.ViewInAndroidStudio
 {
@@ -24,10 +25,6 @@ namespace Taiste.ViewInAndroidStudio
             var xamarinFileToOpen = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
             var xamarinProject = xamarinFileToOpen.Project;
 
-            if (!ProjectHelpers.IsAndroidStudioProjectCreated (xamarinProject)) {
-                ProjectHelpers.CreateAndroidStudioProject (xamarinProject);
-            }
-
             var androidStudioFilePath = ProjectHelpers.GetAndroidStudioProjectResourceDirectoryPath (xamarinProject);
 
             androidStudioFilePath = androidStudioFilePath.Combine (
@@ -35,27 +32,32 @@ namespace Taiste.ViewInAndroidStudio
                 .Split (new string[]{ "Resources" }, StringSplitOptions.None) [1]
                 .Substring (1)
             );
-            
-            OpenFileInAndroidStudio (ProjectHelpers.GetAndroidStudioProjectPath (xamarinProject), androidStudioFilePath);
-        }
 
-        public static void OpenFileInAndroidStudio (params string[] filePath)
-        {
-            if (!File.Exists (Preferences.AndroidStudioLocation)) {
-                MessageDialog dialog = new MessageDialog (IdeApp.Workbench.RootWindow,
-                                           DialogFlags.DestroyWithParent, 
-                                           MessageType.Error, 
-                                           ButtonsType.Ok,
-                                           "Android Studio executable not found at {0}, please locate the executable in Preferences.",
-                                           Preferences.AndroidStudioLocation);
-                dialog.Run ();
-                dialog.Destroy ();
+            if (!File.Exists (androidStudioFilePath)) {
+                GtkHelpers.ShowDialog ("The file does not exist in a current Android Studio project. The Android Studio project will be (re)created.", MessageType.Info);
+                ProjectHelpers.CreateAndroidStudioProject (xamarinProject);
                 return;
             }
 
-            string args = filePath.Select (s => "\"" + s + "\"").Aggregate ("", (a, s) => a + " " + s);
+            OpenFileInAndroidStudio (ProjectHelpers.GetAndroidStudioProjectPath (xamarinProject), androidStudioFilePath);
+        }
+
+        public static void OpenFileInAndroidStudio (params string[] filePaths)
+        {
+            if (!File.Exists (Preferences.AndroidStudioLocation)) {
+                GtkHelpers.ShowDialog (
+                    String.Format ("Android Studio executable not found at {0}, please locate the executable in Preferences.", Preferences.AndroidStudioLocation),
+                    MessageType.Error);
+                return;
+            }
+
+            string args = filePaths
+                .Select (StringExtensions.Quote)
+                .Aggregate ("", StringExtensions.JoinWithSpace);
             Process.Start (new ProcessStartInfo (Preferences.AndroidStudioLocation, args));
         }
+
+
 
         protected override void Update (CommandInfo info)
         {

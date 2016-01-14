@@ -7,6 +7,7 @@ using MonoDevelop.Ide.Tasks;
 using MonoDevelop.Components.Commands;
 using MonoDevelop.Core;
 using System.IO;
+using Taiste.ViewInAndroidStudio.Util;
 
 namespace Taiste.ViewInAndroidStudio
 {
@@ -105,12 +106,15 @@ namespace Taiste.ViewInAndroidStudio
 
             projects = projects.Where (p => p.GetProjectTypes ().Contains ("MonoDroid"));
 
-            var fileLists = projects.Select (p => p.Files);
-
-            var files = fileLists.Aggregate (new List<ProjectFile> (), (acc, li) => {
-                acc.AddRange (li);
-                return acc;
-            });
+            var files = 
+                projects
+                .Select (p => p.Files)
+                .Aggregate (new List<ProjectFile> (), 
+                    (acc, li) => {
+                        acc.AddRange (li);
+                        return acc;
+                    }
+                );
 
             TaskService.Errors.ClearByOwner (this);
 

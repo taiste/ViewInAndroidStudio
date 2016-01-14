@@ -34,10 +34,12 @@
     <Compile Include="ViewInAndroidStudioCommands.cs" />
     <Compile Include="Preferences.cs" />
     <Compile Include="GeneralOptions.cs" />
-    <Compile Include="ProjectFileExtensions.cs" />
     <Compile Include="WorkspaceEventListener.cs" />
     <Compile Include="RecreateProjectHandler.cs" />
     <Compile Include="ProjectHelpers.cs" />
+    <Compile Include="Util\GtkHelpers.cs" />
+    <Compile Include="Util\StringExtensions.cs" />
+    <Compile Include="Util\ProjectFileExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Manifest.addin.xml" />
@@ -53,5 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Posix" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Util\" />
   </ItemGroup>
 </Project>
