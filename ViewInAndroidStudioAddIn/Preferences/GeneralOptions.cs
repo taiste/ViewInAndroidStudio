@@ -1,5 +1,4 @@
-﻿using System;
-using MonoDevelop.Ide.Gui.Dialogs;
+﻿using MonoDevelop.Ide.Gui.Dialogs;
 using MonoDevelop.Components;
 
 namespace Taiste.ViewInAndroidStudio.Preferences
@@ -16,7 +15,7 @@ namespace Taiste.ViewInAndroidStudio.Preferences
             Gtk.HBox labelBox = new Gtk.HBox ();
 
             Gtk.Label label = new Gtk.Label ("Android studio executable location:");
-            label.ModifyFont (new Pango.FontDescription (){ Weight = Pango.Weight.Bold });
+            label.ModifyFont (new Pango.FontDescription { Weight = Pango.Weight.Bold });
 
             labelBox.PackStart (label, false, false, 0);
 

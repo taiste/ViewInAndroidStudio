@@ -1,7 +1,5 @@
-﻿using System;
-using MonoDevelop.Components.Commands;
+﻿using MonoDevelop.Components.Commands;
 using MonoDevelop.Ide;
-using System.Linq;
 using MonoDevelop.Projects;
 using Taiste.ViewInAndroidStudio.Util;
 
@@ -13,7 +11,7 @@ namespace Taiste.ViewInAndroidStudio.Commands
         {
             base.Run ();
             var project = IdeApp.ProjectOperations.CurrentSelectedItem as Project;
-            if (project != null && project.IsAndroidProject()) {
+            if (project != null && project.IsAndroidProject ()) {
                 project.CreateAndroidStudioProject ();
             }
         }
@@ -22,7 +20,7 @@ namespace Taiste.ViewInAndroidStudio.Commands
         {
             base.Update (info);
             var project = IdeApp.ProjectOperations.CurrentSelectedItem as Project;
-            info.Visible = project != null && project.IsAndroidProject(); 
+            info.Visible = project != null && project.IsAndroidProject (); 
         }
     }
 }

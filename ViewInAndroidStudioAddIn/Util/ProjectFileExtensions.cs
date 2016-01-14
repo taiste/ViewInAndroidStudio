@@ -1,6 +1,6 @@
-﻿using System;
-using MonoDevelop.Projects;
+﻿using MonoDevelop.Projects;
 using System.Linq;
+using MonoDevelop.Core;
 
 namespace Taiste.ViewInAndroidStudio.Util
 {
@@ -22,6 +22,17 @@ namespace Taiste.ViewInAndroidStudio.Util
             bool isXml = file.Name.Split ('.').Last ().ToLowerInvariant ().EndsWith ("xml");
 
             return isXml && file.IsResource ();
+        }
+
+        public static FilePath GetAndroidStudioFilePath (this ProjectFile file)
+        {
+            if (!file.IsResource ()) {
+                return null;
+            }
+
+            return file.Project.GetAndroidStudioProjectResourceDirectoryPath ()
+                   .Combine (file.FilePath.GetPathPartAfterDirectory ("Resources"));
+
         }
     }
 }

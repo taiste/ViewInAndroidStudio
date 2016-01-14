@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Taiste.ViewInAndroidStudio.Util
+﻿namespace Taiste.ViewInAndroidStudio.Util
 {
     public static class StringExtensions
     {

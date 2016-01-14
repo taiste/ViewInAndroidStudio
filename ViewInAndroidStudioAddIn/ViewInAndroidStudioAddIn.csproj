@@ -40,6 +40,7 @@
     <Compile Include="Preferences\AddInPreferences.cs" />
     <Compile Include="Commands\StartupHandler.cs" />
     <Compile Include="Commands\AddInCommands.cs" />
+    <Compile Include="Util\FilePathExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Manifest.addin.xml" />

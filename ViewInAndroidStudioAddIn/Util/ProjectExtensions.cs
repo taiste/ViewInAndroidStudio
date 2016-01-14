@@ -3,7 +3,6 @@ using MonoDevelop.Projects;
 using MonoDevelop.Core;
 using System.IO;
 using Gtk;
-using MonoDevelop.Ide;
 using System.Reflection;
 using Mono.Unix.Native;
 using MonoDevelop.Core.Execution;
@@ -15,7 +14,6 @@ namespace Taiste.ViewInAndroidStudio.Util
 {
     public static class ProjectExtensions
     {
-        
         const string ScriptFileName = "android_xamarin_linker.sh";
 
         public static bool IsAndroidStudioProjectCreated (this Project p)
@@ -67,7 +65,7 @@ namespace Taiste.ViewInAndroidStudio.Util
 
         public static bool IsAndroidProject (this Project p)
         {
-            return p.GetProjectTypes().Contains ("MonoDroid");
+            return p.GetProjectTypes ().Contains ("MonoDroid");
         }
     }
 }
