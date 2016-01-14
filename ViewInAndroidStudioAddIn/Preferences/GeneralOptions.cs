@@ -2,7 +2,7 @@
 using MonoDevelop.Ide.Gui.Dialogs;
 using MonoDevelop.Components;
 
-namespace Taiste.ViewInAndroidStudio
+namespace Taiste.ViewInAndroidStudio.Preferences
 {
     public class GeneralOptions : OptionsPanel
     {
@@ -21,7 +21,7 @@ namespace Taiste.ViewInAndroidStudio
             labelBox.PackStart (label, false, false, 0);
 
             entry = new FileEntry ();
-            entry.Path = Preferences.AndroidStudioLocation;
+            entry.Path = AddInPreferences.AndroidStudioLocation;
 
             box.PackStart (labelBox, false, false, 0);
             box.PackStart (entry, false, false, 0);
@@ -32,8 +32,8 @@ namespace Taiste.ViewInAndroidStudio
 
         public override void ApplyChanges ()
         {
-            Preferences.AndroidStudioLocation = entry.Path;
-            Preferences.SaveConfig ();
+            AddInPreferences.AndroidStudioLocation = entry.Path;
+            AddInPreferences.SaveConfig ();
         }
     }
 }

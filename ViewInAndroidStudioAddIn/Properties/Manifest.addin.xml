@@ -3,28 +3,28 @@
     <Extension
         path="/MonoDevelop/Ide/Commands">
         <Command
-            id="Taiste.ViewInAndroidStudio.ViewInAndroidStudioCommands.ViewFile"
+            id="Taiste.ViewInAndroidStudio.Commands.AddInCommands.ViewFile"
             _label="View in Android Studio"
-            defaultHandler="Taiste.ViewInAndroidStudio.ViewHandler" />
+            defaultHandler="Taiste.ViewInAndroidStudio.Commands.ViewHandler" />
              <Command
-            id="Taiste.ViewInAndroidStudio.ViewInAndroidStudioCommands.RecreateProject"
+            id="Taiste.ViewInAndroidStudio.Commands.AddInCommands.RecreateProject"
             _label="(Re)create Android Studio project"
-            defaultHandler="Taiste.ViewInAndroidStudio.RecreateProjectHandler" />
+            defaultHandler="Taiste.ViewInAndroidStudio.Commands.RecreateProjectHandler" />
     </Extension>
     <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog">
-        <Section id="Taiste.ViewInAndroidStudio" _label="Android Studio" />
+        <Section id="ViewInAndroidStudio" _label="Android Studio" />
     </Extension>
     <Extension path="/MonoDevelop/Ide/StartupHandlers">
-        <Class id ="Taiste.ViewInAndroidStudio.WorkspaceEventListener"/>
+        <Class id ="Taiste.ViewInAndroidStudio.Commands.StartupHandler"/>
     </Extension>
     <Extension path = "/MonoDevelop/Ide/GlobalOptionsDialog/ViewInAndroidStudio">
-        <Section id = "ViewInAndroidStudioGeneral" _label = "General" fill="true" class="Taiste.ViewInAndroidStudio.GeneralOptions" />
+        <Section id = "ViewInAndroidStudioGeneral" _label = "General" fill="true" class="Taiste.ViewInAndroidStudio.Preferences.GeneralOptions" />
     </Extension>
     <Extension
         path="/MonoDevelop/Ide/ContextMenu/ProjectPad">
         <CommandItem
-            id="Taiste.ViewInAndroidStudio.ViewInAndroidStudioCommands.ViewFile" />
+            id="Taiste.ViewInAndroidStudio.Commands.AddInCommands.ViewFile" />
         <CommandItem
-            id="Taiste.ViewInAndroidStudio.ViewInAndroidStudioCommands.RecreateProject" />
+            id="Taiste.ViewInAndroidStudio.Commands.AddInCommands.RecreateProject" />
     </Extension>
 </ExtensionModel>

@@ -9,9 +9,9 @@ using MonoDevelop.Core;
 using System.IO;
 using Taiste.ViewInAndroidStudio.Util;
 
-namespace Taiste.ViewInAndroidStudio
+namespace Taiste.ViewInAndroidStudio.Commands
 {
-    public class WorkspaceEventListener: CommandHandler
+    public class StartupHandler: CommandHandler
     {
         protected override void Run ()
         {
@@ -104,7 +104,7 @@ namespace Taiste.ViewInAndroidStudio
         {
             IEnumerable<Project> projects = IdeApp.Workspace.GetAllProjects ().ToList ();
 
-            projects = projects.Where (p => p.GetProjectTypes ().Contains ("MonoDroid"));
+            projects = projects.Where (ProjectExtensions.IsAndroidProject);
 
             var files = 
                 projects

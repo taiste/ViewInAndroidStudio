@@ -11,8 +11,9 @@ using System.Diagnostics;
 using System.IO;
 using Gtk;
 using Taiste.ViewInAndroidStudio.Util;
+using Taiste.ViewInAndroidStudio.Preferences;
 
-namespace Taiste.ViewInAndroidStudio
+namespace Taiste.ViewInAndroidStudio.Commands
 {
     public class ViewHandler : CommandHandler
     {
@@ -25,7 +26,7 @@ namespace Taiste.ViewInAndroidStudio
             var xamarinFileToOpen = IdeApp.ProjectOperations.CurrentSelectedItem as ProjectFile;
             var xamarinProject = xamarinFileToOpen.Project;
 
-            var androidStudioFilePath = ProjectHelpers.GetAndroidStudioProjectResourceDirectoryPath (xamarinProject);
+            var androidStudioFilePath = xamarinProject.GetAndroidStudioProjectResourceDirectoryPath ();
 
             androidStudioFilePath = androidStudioFilePath.Combine (
                 xamarinFileToOpen.FilePath.FullPath.ToString ()
@@ -35,18 +36,18 @@ namespace Taiste.ViewInAndroidStudio
 
             if (!File.Exists (androidStudioFilePath)) {
                 GtkHelpers.ShowDialog ("The file does not exist in a current Android Studio project. The Android Studio project will be (re)created.", MessageType.Info);
-                ProjectHelpers.CreateAndroidStudioProject (xamarinProject);
+                xamarinProject.CreateAndroidStudioProject ();
                 return;
             }
 
-            OpenFileInAndroidStudio (ProjectHelpers.GetAndroidStudioProjectPath (xamarinProject), androidStudioFilePath);
+            OpenFileInAndroidStudio (xamarinProject.GetAndroidStudioProjectPath (), androidStudioFilePath);
         }
 
         public static void OpenFileInAndroidStudio (params string[] filePaths)
         {
-            if (!File.Exists (Preferences.AndroidStudioLocation)) {
+            if (!File.Exists (AddInPreferences.AndroidStudioLocation)) {
                 GtkHelpers.ShowDialog (
-                    String.Format ("Android Studio executable not found at {0}, please locate the executable in Preferences.", Preferences.AndroidStudioLocation),
+                    String.Format ("Android Studio executable not found at {0}, please locate the executable in Preferences.", AddInPreferences.AndroidStudioLocation),
                     MessageType.Error);
                 return;
             }
@@ -54,7 +55,7 @@ namespace Taiste.ViewInAndroidStudio
             string args = filePaths
                 .Select (StringExtensions.Quote)
                 .Aggregate ("", StringExtensions.JoinWithSpace);
-            Process.Start (new ProcessStartInfo (Preferences.AndroidStudioLocation, args));
+            Process.Start (new ProcessStartInfo (AddInPreferences.AndroidStudioLocation, args));
         }
 
 

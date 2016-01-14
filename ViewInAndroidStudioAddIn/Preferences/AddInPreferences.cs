@@ -4,7 +4,7 @@ using System.IO;
 using MonoDevelop.Core.Serialization;
 using System.Xml;
 
-namespace Taiste.ViewInAndroidStudio
+namespace Taiste.ViewInAndroidStudio.Preferences
 {
     class AddinConfig
     {
@@ -13,8 +13,10 @@ namespace Taiste.ViewInAndroidStudio
     }
 
 
-    public static class Preferences
+    public static class AddInPreferences
     {
+        const string ProjectsDirectory = ".viewinandroidstudio";
+
         public static string AndroidStudioLocation {
             get { return GetConfig ().AndroidStudioLocation; }
             set { GetConfig ().AndroidStudioLocation = value; }
@@ -27,12 +29,26 @@ namespace Taiste.ViewInAndroidStudio
             get { return UserProfile.Current.ConfigDir.Combine ("ViewInAndroidStudio.xml"); }
         }
 
+        private static FilePath GetUserHomePath ()
+        {
+            return new FilePath (
+                (Environment.OSVersion.Platform == PlatformID.Unix || Environment.OSVersion.Platform == PlatformID.MacOSX)
+                ? Environment.GetEnvironmentVariable ("HOME")
+                : Environment.ExpandEnvironmentVariables ("%HOMEDRIVE%%HOMEPATH%")
+            );
+        }
+
+        public static FilePath ProjectsDirectoryPath {
+            get {
+                return GetUserHomePath ().Combine (ProjectsDirectory);
+            }        
+        }
 
         public static void SaveConfig ()
         {
             if (configuration != null) {
                 XmlDataSerializer s = new XmlDataSerializer (dataContext);
-                using (XmlTextWriter wr = new XmlTextWriter (File.CreateText (ConfigFile))) {
+                using (var wr = new XmlTextWriter (File.CreateText (ConfigFile))) {
                     wr.Formatting = Formatting.Indented;
                     s.Serialize (wr, configuration, typeof(AddinConfig)); 
                 }

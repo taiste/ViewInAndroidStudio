@@ -3,8 +3,9 @@ using MonoDevelop.Components.Commands;
 using MonoDevelop.Ide;
 using System.Linq;
 using MonoDevelop.Projects;
+using Taiste.ViewInAndroidStudio.Util;
 
-namespace Taiste.ViewInAndroidStudio
+namespace Taiste.ViewInAndroidStudio.Commands
 {
     public class RecreateProjectHandler: CommandHandler
     {
@@ -12,16 +13,16 @@ namespace Taiste.ViewInAndroidStudio
         {
             base.Run ();
             var project = IdeApp.ProjectOperations.CurrentSelectedItem as Project;
-            if (project != null && project.GetProjectTypes ().Contains ("MonoDroid")) {
-                ProjectHelpers.CreateAndroidStudioProject (project);
+            if (project != null && project.IsAndroidProject()) {
+                project.CreateAndroidStudioProject ();
             }
         }
 
         protected override void Update (CommandInfo info)
         {
             base.Update (info);
-            var file = IdeApp.ProjectOperations.CurrentSelectedItem as Project;
-            info.Visible = file != null && file.GetProjectTypes ().Contains ("MonoDroid"); 
+            var project = IdeApp.ProjectOperations.CurrentSelectedItem as Project;
+            info.Visible = project != null && project.IsAndroidProject(); 
         }
     }
 }
