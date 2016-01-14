@@ -6,19 +6,29 @@
             id="Taiste.ViewInAndroidStudio.Commands.AddInCommands.ViewFile"
             _label="View in Android Studio"
             defaultHandler="Taiste.ViewInAndroidStudio.Commands.ViewHandler" />
-             <Command
+        <Command
             id="Taiste.ViewInAndroidStudio.Commands.AddInCommands.RecreateProject"
             _label="(Re)create Android Studio project"
             defaultHandler="Taiste.ViewInAndroidStudio.Commands.RecreateProjectHandler" />
     </Extension>
-    <Extension path="/MonoDevelop/Ide/GlobalOptionsDialog">
-        <Section id="ViewInAndroidStudio" _label="Android Studio" />
+    <Extension
+        path="/MonoDevelop/Ide/GlobalOptionsDialog">
+        <Section
+            id="ViewInAndroidStudio"
+            _label="Android Studio" />
     </Extension>
-    <Extension path="/MonoDevelop/Ide/StartupHandlers">
-        <Class id ="Taiste.ViewInAndroidStudio.Commands.StartupHandler"/>
+    <Extension
+        path="/MonoDevelop/Ide/StartupHandlers">
+        <Class
+            id="Taiste.ViewInAndroidStudio.Commands.StartupHandler" />
     </Extension>
-    <Extension path = "/MonoDevelop/Ide/GlobalOptionsDialog/ViewInAndroidStudio">
-        <Section id = "ViewInAndroidStudioGeneral" _label = "General" fill="true" class="Taiste.ViewInAndroidStudio.Preferences.GeneralOptions" />
+    <Extension
+        path="/MonoDevelop/Ide/GlobalOptionsDialog/ViewInAndroidStudio">
+        <Section
+            id="ViewInAndroidStudioGeneral"
+            _label="General"
+            fill="true"
+            class="Taiste.ViewInAndroidStudio.Preferences.GeneralOptions" />
     </Extension>
     <Extension
         path="/MonoDevelop/Ide/ContextMenu/ProjectPad">
