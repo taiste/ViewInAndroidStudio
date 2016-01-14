@@ -5,7 +5,14 @@ create_project() {
 
 link_files() {
     #Link -s all res files from the Xamarin Android project to Android Studio
-    find $2 -name '*' -maxdepth 1 -mindepth 1 -exec ln -s {} $1"app/src/main/res" \;
+    find $2 -name '*' -maxdepth 2 -mindepth 1 -exec ln -s {} $1"app/src/main/res" \;
+}
+
+rename_files() {
+    #Rename the resource files to lowercase.
+    #rename all axml files to xml files
+    rename -f 'y/A-Z/a-z/' $1"app/src/main/res"*
+    find . -iname "*.axml" -exec rename -f .axml .xml '{}' \;
 }
 
 if [[ $# -eq 0 ]] ; then
@@ -21,4 +28,5 @@ Program commands are:
 else
     create_project $1
     link_files $1 $2
+    rename_files $1
 fi
