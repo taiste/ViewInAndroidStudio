@@ -5,7 +5,7 @@ Add-in that lets you view Android xml files in Android Studio.
 **Add the repository**
 Install the View In Android Studio Add-In by adding a new Gallery Repository from the following url:
 
-URL
+TBA
 
 Xamarin Studio > Add-in Manager... > Gallery Tab > Repository: Manage Repositories... > Add
 
