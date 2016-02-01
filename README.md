@@ -3,9 +3,7 @@ Add-in that lets you view Android xml files in Android Studio.
 
 #Installation on OS X
 **Add the repository**
-Install the View In Android Studio Add-In by adding a new Gallery Repository from the following url:
-
-TBA
+Install the View In Android Studio Add-In by downloading the Taiste.ViewInAndroidStudioAddin_x.x.mpack -file from the repo root and add a new Gallery Repository.:
 
 Xamarin Studio > Add-in Manager... > Gallery Tab > Repository: Manage Repositories... > Add
 
