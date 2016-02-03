@@ -122,9 +122,8 @@ namespace Taiste.ViewInAndroidStudio.Commands
                 CheckProjectFileName (file);
             }
 
-            var directories = projects.Select (p => p.BaseDirectory);
-            foreach (var baseDirectory in directories) {
-                var resDirPath = baseDirectory.Combine ("Resources");
+            var directories = projects.Select (p => p.GetResourceDirectoryPath());
+            foreach (var resDirPath in directories) {
                 if (Directory.Exists (resDirPath)) {
                     foreach (var dir in Directory.EnumerateDirectories (resDirPath)) {
                         CheckDirectoryName (new FilePath (dir));
