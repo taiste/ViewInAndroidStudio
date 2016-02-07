@@ -1,11 +1,16 @@
 #ViewInAndroidStudio
 Add-in that lets you view Android xml files in Android Studio.
 
-#Installation on OS X
-**Add the repository**
-Install the View In Android Studio Add-In by downloading the Taiste.ViewInAndroidStudioAddin_x.x.mpack -file from the repo root and add a new Gallery Repository.:
+#Requirements
+The addin requires Android SDK Build Tools rev 23.
+Android Studio styled file names. Android Studio is more strict than Xamarin Studio about file names. Only lowercase, 0-9 and underscore are supported.
+Custom classes are not found and might require some tweaking.
 
-Xamarin Studio > Add-in Manager... > Gallery Tab > Repository: Manage Repositories... > Add
+#Installation on OS X
+**Add the mpack file**
+Install the View In Android Studio Add-In by cloning or downloading the Taiste.ViewInAndroidStudioAddin_x.x.mpack -file from the repo root and install new Addin from a local file.:
+
+Xamarin Studio > Add-in Manager... > Bottom left corner > Install from file...
 
 **Configure Android Studio**
 If your Android Studio installation directory differs from the OS X default "/Applications/Android Studio.app/Contents/MacOS/studio" your can change Android Studio path from:
