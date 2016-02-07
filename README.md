@@ -3,7 +3,9 @@ Add-in that lets you view Android xml files in Android Studio.
 
 #Requirements
 The addin requires Android SDK Build Tools rev 23.
+
 Android Studio styled file names. Android Studio is more strict than Xamarin Studio about file names. Only lowercase, 0-9 and underscore are supported.
+
 Custom classes are not found and might require some tweaking.
 
 #Installation on OS X
