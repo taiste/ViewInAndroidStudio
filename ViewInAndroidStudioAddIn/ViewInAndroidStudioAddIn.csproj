@@ -48,9 +48,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MonoDevelop.Addins.0.3.0\build\net40\MonoDevelop.Addins.targets" Condition="Exists('..\packages\MonoDevelop.Addins.0.3.0\build\net40\MonoDevelop.Addins.targets')" />
   <ItemGroup>
-    <AddinFile Include="taisteAndroid.zip" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -62,5 +59,8 @@
     <Folder Include="Util\" />
     <Folder Include="Commands\" />
     <Folder Include="Preferences\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AddinFile Include="androidTemplate.zip" />
   </ItemGroup>
 </Project>

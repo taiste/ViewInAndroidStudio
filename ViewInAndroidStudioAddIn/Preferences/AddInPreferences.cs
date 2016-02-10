@@ -11,7 +11,13 @@ namespace Taiste.ViewInAndroidStudio.Preferences
         [ItemProperty]
         public string AndroidStudioLocation = "/Applications/Android Studio.app/Contents/MacOS/studio";
         [ItemProperty]
-        public bool AutomaticRename = true;
+        public string CompileSdkVersion = "23";
+        [ItemProperty]
+        public string SupportVersion = "23.1.1";
+        [ItemProperty]
+        public string BuildToolsVersion = "23.0.2";
+        [ItemProperty]
+        public string MinSdkVersion = "16";
     }
 
 
@@ -24,9 +30,24 @@ namespace Taiste.ViewInAndroidStudio.Preferences
             set { GetConfig ().AndroidStudioLocation = value; }
         }
 
-        public static bool AutomaticRename {
-            get { return GetConfig ().AutomaticRename; }
-            set { GetConfig ().AutomaticRename = value; }
+        public static string CompileSdkVersion {
+            get { return GetConfig ().CompileSdkVersion; }
+            set { GetConfig ().CompileSdkVersion = value; }
+        }
+
+        public static string SupportVersion {
+            get { return GetConfig ().SupportVersion; }
+            set { GetConfig ().SupportVersion = value; }
+        }
+
+        public static string BuildToolsVersion {
+            get { return GetConfig ().BuildToolsVersion; }
+            set { GetConfig ().BuildToolsVersion = value; }
+        }
+
+        public static string MinSdkVersion {
+            get { return GetConfig ().MinSdkVersion; }
+            set { GetConfig ().MinSdkVersion = value; }
         }
 
         private static AddinConfig configuration;

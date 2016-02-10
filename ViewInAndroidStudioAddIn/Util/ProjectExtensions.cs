@@ -14,12 +14,29 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace Taiste.ViewInAndroidStudio.Util
 {
     public static class ProjectExtensions
     {
-        const string ArchiveName = "TaisteAndroid.zip";
+        const string ArchiveName = "AndroidTemplate.zip";
+
+
+        static readonly string[] SupportLibs = {
+            "com.android.support:appcompat-v7",
+            "com.android.support:design",
+            "com.android.support:support-v4",
+            "com.android.support:cardview-v7",
+            "com.android.support:gridlayout-v7",
+            "com.android.support:recyclerview-v7",
+            "com.android.support:preference-v7",
+            "com.android.support:support-v13",
+            "com.android.support:preference-v14",
+            "com.android.support:support-annotations",
+            "com.android.support:design",
+            "com.android.support:percent",
+        };
 
         public static void CreateAndroidStudioProject (this Project p)
         {
@@ -42,6 +59,7 @@ namespace Taiste.ViewInAndroidStudio.Util
 
         static void CreateAndroidStudioProjectStructure (this Project p)
         {
+            
             FilePath archivePath = 
                 new FilePath (Assembly.GetExecutingAssembly ().Location)
                     .ParentDirectory.Combine (ArchiveName);
@@ -53,7 +71,8 @@ namespace Taiste.ViewInAndroidStudio.Util
 
                 LinkResourceFiles(xamarinResourcePath, androidStudioResourcePath);
 
-                MakeLayoutAliasFile(xamarinResourcePath, androidStudioResourcePath);
+                p.MakeAliasFile();
+                p.FinishGradleFile();
 
             } catch (IOException e) {
                 GtkHelpers.ShowDialog (String.Format("Could not (re)create project structure: {0}", e.Message), MessageType.Error);
@@ -84,71 +103,148 @@ namespace Taiste.ViewInAndroidStudio.Util
 
         }
 
+        static string ConvertCharToUniqueString(char c){
+            if (Char.IsDigit(c) ||
+                (c >= 'a' && c <= 'z')||
+                (c >= 'A' && c <= 'Z')||
+                c == '_' ||
+                c == '.') {
+                return ""+c;
+            }
+            string res = "";
+            while (c > ((char)0)) {
+                c--;
+                res = (char)('a' + c % 26) + res;
+                c = (char)(c / 26);
+            }
+            return "_" + res;
+        }
+
         static string TransformFileName(string fileName, bool isLayout){
             if (fileName.EndsWith ("axml")) {
                 fileName = String.Join (".", fileName.Substring (0, fileName.LastIndexOf ('.')), "xml");
             }
 
             fileName = Regex.Replace (fileName, "([A-Z])", (match) => ((match.Index != 0)? "_":"") + match.Value.ToLower ());
-
+            fileName = String.Join ("", fileName.Select (c => ConvertCharToUniqueString (c)));
             return (isLayout?"_res_":"") + fileName;
         }
 
-        static void MakeLayoutAliasFile(FilePath oldPath, FilePath newPath){
-            var layoutDirs = Directory.EnumerateDirectories(oldPath)
-                .Where(d => new FilePath(d).FileName.StartsWith("layout")).ToList();
+        static IEnumerable<ProjectFile> SelectDistinctFilesWithCapital(this IEnumerable<ProjectFile> filePaths){
+            return filePaths.Where(f => new FilePath(f.Name).FileName.Any(Char.IsUpper)).Distinct();
+        }
 
+        static List<ProjectFile> GetResourceFilesByType(this Project p, string fileType ){
+            var dirs = Directory.EnumerateDirectories(p.GetResourceDirectoryPath())
+                .Where(d => new FilePath(d).FileName.StartsWith(fileType));
+            return  p.Files.Where (f => 
+                dirs.Any (d => f.FilePath.IsChildPathOf (d)))
+                    .SelectDistinctFilesWithCapital ()
+                    .ToList ();
+            
+        }
+
+        static readonly string[] AliasedFileTypes = {
+            "layout", "drawable", "mipmap"
+        };
+
+        static void MakeAliasFile(this Project p){
+
+            var oldPath = p.GetResourceDirectoryPath ();
+            var newPath = p.GetAndroidStudioProjectResourceDirectoryPath ();
             var valuesDir = newPath.Combine("values");
-
-            var layoutFiles = layoutDirs.Select(d => Directory.EnumerateFiles(oldPath.Combine(d)))
-                .Aggregate(new HashSet<string>(),(acc, fnames) => {
-                    foreach (var f in fnames){
-                        acc.Add(new FilePath(f).FileName);
-                    }
-                    return acc;
-                }).Where(f => f.EndsWith("xml") && Char.IsUpper(f[0])).ToList();
-
-            if (!layoutFiles.Any ()) {
-                return;
-            }
 
             if (!Directory.Exists(valuesDir)){
                 Directory.CreateDirectory(valuesDir);
             }
-            var layoutAliasFile = valuesDir.Combine("layout.xml");
-            XElement layoutAliasRoot = null;
-            if (File.Exists(layoutAliasFile)){
+
+            var aliasFile = valuesDir.Combine("__aliases_.xml");
+            XElement aliasRoot = null;
+            if (File.Exists(aliasFile)){
                 try {
-                    using (var input = File.OpenRead(layoutAliasFile)){
-                        layoutAliasRoot = XElement.Load(new XmlTextReader(input));
+                    using (var input = File.OpenRead(aliasFile)){
+                        aliasRoot = XElement.Load(new XmlTextReader(input));
                     }
                 } catch (Exception e){
                     System.Diagnostics.Debug.WriteLine("Could not read layout alias file");                        
                 }
-                File.Delete(layoutAliasFile);
+                File.Delete(aliasFile);
             }
 
-            if (layoutAliasRoot == null){
-                layoutAliasRoot = new XElement(XName.Get("resources"));
+            if (aliasRoot == null){
+                aliasRoot = new XElement(XName.Get("resources"));
             }
 
-           
+            foreach (var fileType in AliasedFileTypes) {
+                AddAliases (fileType, p.GetResourceFilesByType(fileType), aliasRoot);
+              }
 
-            foreach (var file in layoutFiles){
-                var fileName = file.Substring(0, file.LastIndexOf('.'));
-                var layoutName = "@layout/" + TransformFileName(fileName, true);
-                var aliasName = fileName;
-                XElement aliasElement = new XElement(XName.Get("item"));
-                aliasElement.Add(new XAttribute(XName.Get("name"), aliasName));
-                aliasElement.Add(new XAttribute(XName.Get("type"), "layout"));
-                aliasElement.Value = layoutName;
-                layoutAliasRoot.Add(aliasElement);
-            }
-
-            using (var writer = new XmlTextWriter(layoutAliasFile, System.Text.Encoding.UTF8)){
+            using (var writer = new XmlTextWriter(aliasFile, System.Text.Encoding.UTF8)){
                 writer.Formatting = Formatting.Indented;
-                layoutAliasRoot.WriteTo(writer);
+                aliasRoot.WriteTo(writer);
             }
+
+        }
+
+        static void AddAliases (string resourceType, List<ProjectFile> files, XElement aliasRoot)
+        {
+            foreach (var file in files) {
+                var fileName = Directory.GetFiles(file.FilePath.ParentDirectory).FirstOrDefault(name => new FilePath(name).FileName.ToLower() == file.FilePath.FileName.ToLower());
+                fileName = new FilePath(fileName).FileName;
+                fileName = fileName.Substring (0, fileName.LastIndexOf ('.'));
+
+                var layoutName = "@"+resourceType+"/" + TransformFileName (fileName, resourceType == "layout"); //TODO smarter check
+
+                var aliasName = new FilePath(file.Name).FileName;
+                aliasName = aliasName.Substring (0, aliasName.LastIndexOf ('.'));
+
+                XElement aliasElement = new XElement (XName.Get ("item"));
+                aliasElement.Add (new XAttribute (XName.Get ("name"), aliasName));
+                aliasElement.Add (new XAttribute (XName.Get ("type"), resourceType));
+                aliasElement.Value = layoutName;
+                aliasRoot.Add (aliasElement);
+            }
+        }
+
+        static void FinishGradleFile(this Project p) {
+            FilePath pathToBuildGradle = p.GetAndroidStudioProjectPath().Combine("app").Combine ("build.gradle");
+            string contents = null;
+            using (StreamReader reader = new StreamReader (File.OpenRead (pathToBuildGradle))) {
+                contents = reader.ReadToEnd ();
+            }
+
+            Regex.Replace (contents, "compileSdkVersion ([0-9]+)", (match) => 
+                "compileSdkVersion "+AddInPreferences.CompileSdkVersion
+            );
+
+            Regex.Replace (contents, "buildToolsVersion \"([0-9.]+)\"", (match) => 
+                "buildToolsVersion \""+AddInPreferences.BuildToolsVersion+"\""
+            );
+
+            Regex.Replace (contents, "minSdkVersion ([0-9]+)", (match) => 
+                "minSdkVersion "+AddInPreferences.MinSdkVersion
+            );
+
+            Regex.Replace (contents, "targetSdkVersion ([0-9]+)", (match) => 
+                "targetSdkVersion "+AddInPreferences.CompileSdkVersion
+            );
+
+            StringBuilder fileContents = new StringBuilder (contents);
+
+            fileContents.AppendLine ("dependencies {");
+            fileContents.AppendLine ("    compile fileTree(dir: 'libs', include: ['*.jar'])");
+            fileContents.AppendLine ("    testCompile 'junit:junit:4.12'");
+
+            foreach (var package in SupportLibs) {
+                fileContents.AppendLine ("    compile '" + package + ":" + AddInPreferences.SupportVersion + "'");
+            }
+            fileContents.AppendLine ("}");
+
+            using (StreamWriter writer = new StreamWriter(File.OpenWrite(pathToBuildGradle))){
+                writer.Write (fileContents);
+            }
+
+
 
         }
 
