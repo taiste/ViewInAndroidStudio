@@ -1,5 +1,5 @@
 #ViewInAndroidStudio
-Add-in that lets you view Android xml files in Android Studio.
+Add-in that lets you view and edit Android resource xml files in Android Studio.
 
 #Requirements
 The addin requires Android SDK Build Tools rev 23.
